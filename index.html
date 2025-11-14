@@ -484,9 +484,9 @@
                 timestamp: "10:15 AM",
                 teacher: "Aishwarya maam",
                 student: "Akshay Kumar",
-                subject: "Math",
-                chapter: "Linear Equations",
-                workDone: "EX 12c."
+                subject: "Chennai_Super_Kings_Superfan",
+                chapter: "History of IPL",
+                workDone: "Discussed Dhoni's captaincy and team legacy."
             },
             {
                 timestamp: "11:00 AM",
@@ -745,4 +745,135 @@
             document.getElementById("teacherModal").style.display = "none";
             document.getElementById("newTeacherName").value = "";
             document.getElementById("newTeacherSubjects").value = "";
-            document.
+            document.getElementById("newTeacherPin").value = "";
+            loadTeachers();
+        };
+
+        document.getElementById("closeConfirmationModal").onclick = function() {
+            document.getElementById("confirmationModal").style.display = "none";
+        };
+
+        document.getElementById("confirmCloseBtn").onclick = function() {
+            document.getElementById("confirmationModal").style.display = "none";
+        };
+
+        window.onclick = function(ev) {
+            if (ev.target === document.getElementById("studentModal"))
+                document.getElementById("studentModal").style.display = "none";
+            if (ev.target === document.getElementById("teacherModal"))
+                document.getElementById("teacherModal").style.display = "none";
+            if (ev.target === document.getElementById("confirmationModal"))
+                document.getElementById("confirmationModal").style.display = "none";
+        };
+
+        function displaySubmissions(entries, teacherName) {
+            const tableContainer = document.getElementById("tableContainer");
+            
+            if (entries.length === 0) {
+                tableContainer.innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">No submissions found for ${teacherName} today.</div>`;
+                document.getElementById("copyTableBtn").style.display = "none";
+                return;
+            }
+            
+            let tableHTML = `<div class="entry" style="background:var(--main-white); border-color: var(--main-darkred);">
+                <h4 style="margin-top:0; color: var(--main-darkred);">Today's Submissions for ${teacherName}</h4>
+                <p style="margin-bottom:10px; font-size: 0.9rem;">Filtered by teacher PIN.</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Chapter</th>
+                        <th>Work Done</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            entries.forEach(entry => {
+                tableHTML += `<tr>
+                    <td>${entry.timestamp}</td>
+                    <td>${entry.student}</td>
+                    <td>${entry.subject}</td>
+                    <td>${entry.chapter}</td>
+                    <td>${entry.workDone}</td>
+                </tr>
+                `;
+            });
+            
+            tableHTML += `</tbody>
+            </table>
+            `;
+            
+            tableContainer.innerHTML = tableHTML;
+            document.getElementById("copyTableBtn").style.display = "block";
+        }
+
+        document.getElementById("viewSubmissionsBtn").onclick = async function() {
+            const pin = document.getElementById("pin").value;
+            
+            if (!pin) {
+                showMessage("Please enter your PIN.", true);
+                document.getElementById("tableContainer").innerHTML = "";
+                return;
+            }
+            
+            const viewButton = document.getElementById("viewSubmissionsBtn");
+            viewButton.disabled = true;
+            viewButton.textContent = "Loading...";
+            
+            document.getElementById("tableContainer").innerHTML = '<div class="entry" style="text-align:center;">Retrieving submissions...</div>';
+            
+            const teacherData = Object.values(teachers).find(t => t.pin === pin);
+            
+            if (!teacherData) {
+                showMessage("Invalid PIN.", true, 6000);
+                document.getElementById("tableContainer").innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">Error retrieving data. Invalid PIN entered.</div>`;
+                document.getElementById("copyTableBtn").style.display = "none";
+                viewButton.disabled = false;
+                viewButton.textContent = "View Today's Submissions";
+                return;
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            const filteredEntries = demoEntries.filter(entry => entry.teacher === teacherData.display);
+            displaySubmissions(filteredEntries, teacherData.display);
+            
+            viewButton.disabled = false;
+            viewButton.textContent = "View Today's Submissions";
+        };
+
+        document.getElementById('toggleView').addEventListener('click', function() {
+            const container = document.getElementById('mainContainer');
+            const isDesktop = container.classList.toggle('desktop');
+            this.textContent = isDesktop ? 'Optimize for Mobile' : 'Optimize for Desktop';
+        });
+
+        // Copy table functionality
+        document.getElementById("copyTableBtn").addEventListener("click", () => {
+            const table = document.querySelector("#tableContainer table");
+            if (!table) return;
+            
+            let range = document.createRange();
+            range.selectNode(table);
+            let selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            try {
+                document.execCommand("copy");
+                alert("Table copied to clipboard!");
+            } catch (err) {
+                alert("Copy failed.");
+            }
+            
+            selection.removeAllRanges();
+        });
+
+        window.onload = loadTeachers;
+    </script>
+</body>
+</html>
