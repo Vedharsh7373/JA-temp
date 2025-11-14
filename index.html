@@ -1,880 +1,797 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Teacher Entry Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --main-red: red;
-            --main-white: white;
-            --main-pale: mistyrose;
-            --main-darkred: darkred;
-            --main-orange: #ff9800;
-            --main-darkorange: #f57c00;
-        }
-        
-        body {
-            font-family: "Roboto", Arial, sans-serif;
-            margin: 0;
-            background: var(--main-pale);
-            color: var(--main-red);
-            min-height: 100vh;
-        }
-        
-        header {
-            background: var(--main-red);
-            color: var(--main-white);
-            padding: 24px 0 18px 0;
-            text-align: center;
-            box-shadow: 0 6px 30px -10px var(--main-darkred), 0 2px 12px var(--main-red);
-        }
-        
-        h1 {
-            margin: 0;
-            font-family: "Montserrat", Arial, sans-serif;
-            font-size: 2.6rem;
-            letter-spacing: 1.5px;
-            font-weight: 900;
-            text-shadow: 0 2px 4px var(--main-darkred);
-        }
-        
-        .container {
-            max-width: 610px;
-            margin: 36px auto 0;
-            background: var(--main-white);
-            border: 2px solid var(--main-red);
-            border-radius: 19px;
-            box-shadow: 0 6px 24px -10px var(--main-darkred), 0 2px 12px var(--main-red);
-            padding: 38px 34px 36px;
-        }
-        
-        label {
-            display: block;
-            font-weight: 700;
-            margin-top: 18px;
-            margin-bottom: 7px;
-            color: var(--main-red);
-            font-family: "Montserrat", Arial, sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 9.5px 9px;
-            margin-top: 2.5px;
-            border-radius: 9px;
-            border: 2px solid var(--main-red);
-            font-size: 1.06rem;
-            background: var(--main-white);
-            font-family: "Roboto", Arial, sans-serif;
-            box-sizing: border-box;
-            color: var(--main-darkred);
-            transition: box-shadow 0.16s, border-color 0.2s;
-            box-shadow: 0 1px 4px 0 var(--main-pale);
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--main-darkred);
-            outline: none;
-            background: var(--main-pale);
-            box-shadow: 0 2px 8px 0 var(--main-red);
-        }
-        
-        textarea {
-            resize: vertical;
-        }
-        
-        button, .btn-link button {
-            margin-top: 15px;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.15rem;
-            font-family: "Montserrat", Arial, sans-serif;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            transition: background 0.22s, color: 0.22s, box-shadow 0.23s;
-            width: auto;
-        }
-        
-        .btn-link button {
-            margin-left: 0;
-            margin-right: 0;
-            width: 100%;
-        }
-        
-        button.primary, .btn-link button.primary {
-            background: linear-gradient(90deg,var(--main-red),var(--main-darkred));
-            color: var(--main-white);
-            border: 2px solid var(--main-red);
-            box-shadow: 0 4px 18px -6px var(--main-darkred), 0 2px 8px var(--main-red);
-        }
-        
-        button.primary:hover, .btn-link button.primary:hover {
-            background: linear-gradient(90deg,var(--main-darkred),var(--main-red));
-            color: var(--main-white);
-            box-shadow: 0 6px 24px -8px var(--main-darkred), 0 2px 12px var(--main-red);
-        }
-        
-        button.secondary, .btn-link button.secondary {
-            background: var(--main-white);
-            color: var(--main-red);
-            border: 2px solid var(--main-red);
-            box-shadow: 0 2px 10px var(--main-pale), 0 1px 4px var(--main-red);
-        }
-        
-        button.secondary:hover, .btn-link button.secondary:hover {
-            background: var(--main-pale);
-            color: var(--main-darkred);
-        }
-        
-        .entry, #tableContainer, #output {
-            margin-top: 22px;
-            padding: 16px;
-            border: 2px solid var(--main-red);
-            border-radius: 13px;
-            background: var(--main-pale);
-            font-size: 1.05rem;
-            color: var(--main-darkred);
-            font-family: "Roboto", Arial, sans-serif;
-            box-shadow: 0 2px 10px var(--main-pale);
-        }
-        
-        #tableContainer {
-            overflow-x: auto;
-        }
-        
-        table {
-            width: 100%;
-            min-width: 550px;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background: var(--main-white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px var(--main-pale), 0 1px 6px var(--main-red);
-        }
-        
-        th, td {
-            border: 1px solid var(--main-red);
-            padding: 10px 9px;
-            text-align: left;
-            font-size: 1rem;
-            background: var(--main-white);
-            color: var(--main-darkred);
-            font-family: "Roboto", Arial, sans-serif;
-        }
-        
-        th {
-            background: linear-gradient(90deg,var(--main-red),var(--main-darkred));
-            color: var(--main-white);
-            font-family: "Montserrat", Arial, sans-serif;
-            font-weight: 900;
-            letter-spacing: 1.6px;
-        }
-        
-        #toggleView {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 18px;
-            font-family: "Montserrat", Arial, sans-serif;
-        }
-        
-        .desktop form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 28px;
-        }
-        
-        .desktop form > div.full-width, .desktop .full-width {
-            grid-column: span 2;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background: var(--main-white);
-            margin: 10% auto;
-            padding: 28px 24px 20px 24px;
-            width: 90%;
-            max-width: 400px;
-            border: 2px solid var(--main-red);
-            border-radius: 16px;
-            color: var(--main-red);
-            font-size: 1rem;
-            position: relative;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
-        
-        .close {
-            position: absolute;
-            top: 8px;
-            right: 14px;
-            font-size: 26px;
-            cursor: pointer;
-            color: var(--main-darkred);
-            font-weight: bold;
-        }
-        
-        .close:hover {
-            color: var(--main-red);
-        }
-        
-        @media (max-width: 700px) {
-            .container {padding: 22px 8px 20px;}
-            th, td {font-size: 0.97rem;}
-            .modal-content {padding: 20px 7vw;}
-        }
-        
-        .logo-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 8px;
-            gap: 16px;
-        }
-        
-        .logo {
-            height: 150px;
-            width: 350px;
-            border-radius: 7px;
-            background: white;
-            box-shadow: 0 2px 6px #ddd;
-        }
-        
-        .logo.square {
-            width: 150px;
-        }
-        
-        @media (max-width: 500px){
-            .logo {
-                height: 100px;
-                width: 100%;
-            }
-            .logo.square {
-                width: 100px;
-                height: 100px;
-            }
-            .logo-bar {
-                gap: 15px;
-                flex-direction: column;
-            }
-        }
-        
-        .pin-section {
-            margin-top: 15px;
-            padding: 15px;
-            border: 1px solid var(--main-red);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.7);
-        }
-        
-        .pin-section .action-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
-        }
-        
-        .pin-section .action-buttons button,
-        .pin-section .action-buttons a {
-            flex: 1;
-            margin-top: 0;
-        }
-        
-        .pin-section .action-buttons a button {
-            width: 100%;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Entry Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--main-red: red;
+--main-white: white;
+--main-pale: mistyrose;
+--main-darkred: darkred;
+--main-orange: #ff9800;
+--main-darkorange: #f57c00;
+}
+body {
+font-family: "Roboto", Arial, sans-serif;
+margin: 0;
+background: var(--main-pale);
+color: var(--main-red);
+min-height: 100vh;
+}
+header {
+background: var(--main-red);
+color: var(--main-white);
+padding: 24px 0 18px 0;
+text-align: center;
+box-shadow: 0 6px 30px -10px var(--main-darkred), 0 2px 12px var(--main-red);
+}
+h1 {
+margin: 0;
+font-family: "Montserrat", Arial, sans-serif;
+font-size: 2.6rem;
+letter-spacing: 1.5px;
+font-weight: 900;
+text-shadow: 0 2px 4px var(--main-darkred);
+}
+.container {
+max-width: 610px;
+margin: 36px auto 0;
+background: var(--main-white);
+border: 2px solid var(--main-red);
+border-radius: 19px;
+box-shadow: 0 6px 24px -10px var(--main-darkred), 0 2px 12px var(--main-red);
+padding: 38px 34px 36px;
+}
+label {
+display: block;
+font-weight: 700;
+margin-top: 18px;
+margin-bottom: 7px;
+color: var(--main-red);
+font-family: "Montserrat", Arial, sans-serif;
+letter-spacing: 1px;
+}
+input, select, textarea {
+width: 100%;
+padding: 9.5px 9px;
+margin-top: 2.5px;
+border-radius: 9px;
+border: 2px solid var(--main-red);
+font-size: 1.06rem;
+background: var(--main-white);
+font-family: "Roboto", Arial, sans-serif;
+box-sizing: border-box;
+color: var(--main-darkred);
+transition: box-shadow 0.16s, border-color 0.2s;
+box-shadow: 0 1px 4px 0 var(--main-pale);
+}
+input:focus, select:focus, textarea:focus {
+border-color: var(--main-darkred);
+outline: none;
+background: var(--main-pale);
+box-shadow: 0 2px 8px 0 var(--main-red);
+}
+textarea {
+resize: vertical;
+}
+button, .btn-link button {
+margin-top: 15px;
+padding: 12px 25px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-size: 1.15rem;
+font-family: "Montserrat", Arial, sans-serif;
+font-weight: 700;
+letter-spacing: 1.5px;
+transition: background 0.22s, color: 0.22s, box-shadow 0.23s;
+width: auto;
+}
+.btn-link button {
+margin-left: 0;
+margin-right: 0;
+width: 100%;
+}
+button.primary, .btn-link button.primary {
+background: linear-gradient(90deg,var(--main-red),var(--main-darkred));
+color: var(--main-white);
+border: 2px solid var(--main-red);
+box-shadow: 0 4px 18px -6px var(--main-darkred), 0 2px 8px var(--main-red);
+}
+button.primary:hover, .btn-link button.primary:hover {
+background: linear-gradient(90deg,var(--main-darkred),var(--main-red));
+color: var(--main-white);
+box-shadow: 0 6px 24px -8px var(--main-darkred), 0 2px 12px var(--main-red);
+}
+button.secondary, .btn-link button.secondary {
+background: var(--main-white);
+color: var(--main-red);
+border: 2px solid var(--main-red);
+box-shadow: 0 2px 10px var(--main-pale), 0 1px 4px var(--main-red);
+}
+button.secondary:hover, .btn-link button.secondary:hover {
+background: var(--main-pale);
+color: var(--main-darkred);
+}
+.entry, #tableContainer, #output {
+margin-top: 22px;
+padding: 16px;
+border: 2px solid var(--main-red);
+border-radius: 13px;
+background: var(--main-pale);
+font-size: 1.05rem;
+color: var(--main-darkred);
+font-family: "Roboto", Arial, sans-serif;
+box-shadow: 0 2px 10px var(--main-pale);
+}
+#tableContainer {
+overflow-x: auto;
+}
+table {
+width: 100%;
+min-width: 550px;
+border-collapse: collapse;
+margin-top: 10px;
+background: var(--main-white);
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 2px 12px var(--main-pale), 0 1px 6px var(--main-red);
+}
+th, td {
+border: 1px solid var(--main-red);
+padding: 10px 9px;
+text-align: left;
+font-size: 1rem;
+background: var(--main-white);
+color: var(--main-darkred);
+font-family: "Roboto", Arial, sans-serif;
+}
+th {
+background: linear-gradient(90deg,var(--main-red),var(--main-darkred));
+color: var(--main-white);
+font-family: "Montserrat", Arial, sans-serif;
+font-weight: 900;
+letter-spacing: 1.6px;
+}
+#toggleView {
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 18px;
+font-family: "Montserrat", Arial, sans-serif;
+}
+.desktop form {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px 28px;
+}
+.desktop form > div.full-width, .desktop .full-width {
+grid-column: span 2;
+}
+.modal {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.4);
+z-index: 1000;
+}
+.modal-content {
+background: var(--main-white);
+margin: 10% auto;
+padding: 28px 24px 20px 24px;
+width: 90%;
+max-width: 400px;
+border: 2px solid var(--main-red);
+border-radius: 16px;
+color: var(--main-red);
+font-size: 1rem;
+position: relative;
+box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.close {
+position: absolute;
+top: 8px;
+right: 14px;
+font-size: 26px;
+cursor: pointer;
+color: var(--main-darkred);
+font-weight: bold;
+}
+.close:hover {
+color: var(--main-red);
+}
+@media (max-width: 700px) {
+.container {padding: 22px 8px 20px;}
+th, td {font-size: 0.97rem;}
+.modal-content {padding: 20px 7vw;}
+}
+.logo-bar {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-bottom: 8px;
+gap: 16px;
+}
+.logo {
+height: 150px;
+width: 350px;
+border-radius: 7px;
+background: white;
+box-shadow: 0 2px 6px #ddd;
+}
+.logo.square {
+width: 150px;
+}
+@media (max-width: 500px){
+.logo {
+height: 100px;
+width: 100%;
+}
+.logo.square {
+width: 100px;
+height: 100px;
+}
+.logo-bar {
+gap: 15px;
+flex-direction: column;
+}
+}
+.pin-section {
+margin-top: 15px;
+padding: 15px;
+border: 1px solid var(--main-red);
+border-radius: 10px;
+background: rgba(255, 255, 255, 0.7);
+}
+.pin-section .action-buttons {
+display: flex;
+gap: 10px;
+justify-content: space-between;
+}
+.pin-section .action-buttons button,
+.pin-section .action-buttons a {
+flex: 1;
+margin-top: 0;
+}
+.pin-section .action-buttons a button {
+width: 100%;
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo-bar">
-            <img src="https://raw.githubusercontent.com/Vedharsh7373/Student-information/main/Logo_1.PNG" alt="Logo 1" class="logo" onerror="this.style.display='none'">
-            <img src="https://raw.githubusercontent.com/Vedharsh7373/Student-information/main/Logo_2.png" alt="Logo 2" class="logo square" onerror="this.style.display='none'">
-        </div>
-        <h1>Teacher Entry Portal</h1>
-    </header>
+<header>
+<div class="logo-bar">
+<img src="https://raw.githubusercontent.com/Vedharsh7373/Student-information/main/Logo_1.PNG" alt="Logo 1" class="logo" onerror="this.style.display='none'">
+<img src="https://raw.githubusercontent.com/Vedharsh7373/Student-information/main/Logo_2.png" alt="Logo 2" class="logo square" onerror="this.style.display='none'">
+</div>
+<h1>Teacher Entry Portal</h1>
+</header>
+<div class="container" id="mainContainer">
+<button id="toggleView" class="secondary">Optimize for Desktop</button>
+<form id="entryForm">
+<div>
+<label>Teacher:</label>
+<select id="teacher" required>
+<option value="" disabled selected>Loading...</option>
+</select>
+</div>
+<div>
+<label>Student:</label>
+<select id="student" required>
+<option value="" disabled selected>Select Student (After Teacher)</option>
+</select>
+</div>
+<div>
+<label>Subject:</label>
+<select id="subject" required>
+<option value="" disabled selected>Select Subject (After Teacher)</option>
+</select>
+</div>
+<div>
+<label>Chapter:</label>
+<input type="text" id="chapter" required>
+</div>
+<div class="full-width">
+<label>Work Done:</label>
+<textarea id="workDone" rows="3" required></textarea>
+</div>
+<button type="submit" class="primary full-width">Submit Entry</button>
+</form>
+<div style="margin-top:15px; display: flex; gap: 10px;">
+<button id="addStudentBtn" class="secondary">Add Student</button>
+<button id="addTeacherBtn" class="secondary">Add Teacher</button>
+</div>
+<div class="pin-section">
+<p style="margin-top:0; font-size: 0.9rem; color: var(--main-darkred); font-weight: 700;">
+Enter your confidential PIN to view data.
+</p>
+<label style="margin-top:0;">View Submissions:</label>
+<input type="password" id="pin" placeholder="Enter Teacher PIN">
+<div class="action-buttons">
+<button id="viewSubmissionsBtn" class="primary">View Today's Submissions</button>
+<a href="https://docs.google.com/spreadsheets/d/1CrO5IRSpQCed70G90qCrlTuYoO9KL-lXnL4bDnz_DA0/edit?pli=1&gid=838070733#gid=838070733" target="_blank" class="btn-link">
+<button class="secondary">View Google Sheet</button>
+</a>
+</div>
+</div>
+<div id="output" class="entry" style="display:none"></div>
+<button id="copyTableBtn" class="secondary" style="display:none; margin-top:15px; width:100%;">
+Copy Table
+</button>
+<div id="tableContainer"></div>
+</div>
+<div class="modal" id="studentModal">
+<div class="modal-content">
+<span class="close" id="closeStudentModal">&times;</span>
+<h3 style="margin-top:0;">Add New Student</h3>
+<label>Name:</label>
+<input type="text" id="newStudentName">
+<label>Assign Teacher:</label>
+<select id="newStudentTeacher"></select>
+<button id="saveStudentBtn" class="primary">Save Student</button>
+</div>
+</div>
+<div class="modal" id="teacherModal">
+<div class="modal-content">
+<span class="close" id="closeTeacherModal">&times;</span>
+<h3 style="margin-top:0;">Add New Teacher</h3>
+<label>Display Name:</label>
+<input type="text" id="newTeacherName">
+<label>Subjects (comma separated):</label>
+<input type="text" id="newTeacherSubjects">
+<label>PIN (numbers only):</label>
+<input type="password" id="newTeacherPin">
+<button id="saveTeacherBtn" class="primary">Save Teacher</button>
+</div>
+</div>
+<div class="modal" id="confirmationModal">
+<div class="modal-content" style="border-color: green;">
+<span class="close" id="closeConfirmationModal" style="color: green;">&times;</span>
+<h3 style="margin-top:0; color: green; font-weight: 900; display: flex; align-items: center; gap: 8px;">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+Entry Recorded!
+</h3>
+<p id="confirmationMessage" style="color: var(--main-darkred); font-weight: 500;">
+Your daily work done entry has been successfully recorded. Thank you.
+</p>
+<button id="confirmCloseBtn" class="primary full-width" style="background: linear-gradient(90deg,green,darkgreen); border-color: green;">
+Acknowledge and Continue
+</button>
+</div>
+</div>
+<script>
+let teachers = {
+"AISHWARYA_MAAM": {
+display: "Aishwarya maam",
+subjects: ["Math", "Other"],
+pin: "1111",
+students: ["Raghu Naidu", "Akshay Kumar", "Sneha Ramesh", "Pranav Shetty", "Kavya Srinivasan", "Rohan Gowda", "Meera Menon"]
+},
+"DIVYA_MAAM": {
+display: "Divya maam",
+subjects: ["Science", "Other"],
+pin: "2222",
+students: ["Tejas Naidu", "Harsha Venkatesh", "Nandini Rao", "Sanjay Reddy", "Keerthana Mohan", "Vinay Prabhu", "Shruthi Balakrishna"]
+},
+"GEETU_MAAM": {
+display: "Geetu maam",
+subjects: ["English", "SST", "Other"],
+pin: "3333",
+students: ["Manoj Naidu", "Shyam Chandra", "Lakshmi Subramanian", "Pooja Kumar", "Chirag Narayan", "Anusha Desai", "Sahana Krishna"]
+},
+"DEEPALI_MAAM": {
+display: "Deepali maam",
+subjects: ["English", "SST", "Science", "Math", "Other"],
+pin: "4444",
+students: ["Arun Naidu", "Divya Gopal", "Suresh Hebbar", "Rashmi Acharya", "Vivek Rajan", "Raksha Shekhar", "Karthik Pillai"]
+},
+"PRIYANKA_MAAM": {
+display: "Priyanka maam",
+subjects: ["Hindi", "SST", "Science", "Math", "Other"],
+pin: "5555",
+students: ["Madhuri Naidu", "Ganesh Murthy", "Anjali Bhat", "Satish Hegde", "Sindhu Rao", "Ramu Srinivas", "Ramya D'Souza"]
+},
+"LATHA_MAAM": {
+display: "Latha maam",
+subjects: ["Kannada", "SST", "Science", "Maths", "Other"],
+pin: "6666",
+students: ["Lakshman Naidu", "Karthik Shenoy", "Tejaswini Pai", "Neha Krishnamurthy", "Deepak Joshi", "Asha Ramamurthy", "Surya Mohan"]
+},
+"KHUSHBOO_MAAM": {
+display: "Khushboo maam",
+subjects: ["Hindi", "English", "Kannada", "Other"],
+pin: "7777",
+students: ["Arjun Naidu", "Suhas Kulkarni", "Rekha Dutt", "Vikas Urs", "Rachana Shetty", "Shilpa Gowda", "Abhijit Kumar"]
+},
+};
+let demoEntries = [
+{
+timestamp: "08:30 AM",
+teacher: "Aishwarya maam",
+student: "Raghu Naidu",
+subject: "General",
+chapter: "Introduction to Class",
+workDone: "Attendance and brief on upcoming curriculum."
+},
+{
+timestamp: "09:00 AM",
+teacher: "Divya maam",
+student: "Tejas Naidu",
+subject: "Science",
+chapter: "Biology: Cells",
+workDone: "Reviewed Chapter 1, assigned reading."
+},
+{
+timestamp: "09:45 AM",
+teacher: "Deepali maam",
+student: "Arun Naidu",
+subject: "Math",
+chapter: "Algebra",
+workDone: "Finished practice set 2.1, homework assigned."
+},
+{
+timestamp: "10:15 AM",
+teacher: "Aishwarya maam",
+student: "Akshay Kumar",
+subject: "Chennai_Super_Kings_Superfan",
+chapter: "History of IPL",
+workDone: "Discussed Dhoni's captaincy and team legacy."
+},
+{
+timestamp: "11:00 AM",
+teacher: "Priyanka maam",
+student: "Madhuri Naidu",
+subject: "Hindi",
+chapter: "Poetry",
+workDone: "Recitation of 'Dohe' by Kabir."
+},
+{
+timestamp: "12:00 PM",
+teacher: "Geetu maam",
+student: "Manoj Naidu",
+subject: "English",
+chapter: "Grammar",
+workDone: "Practiced tenses and sentence correction."
+},
+{
+timestamp: "12:30 PM",
+teacher: "Deepali maam",
+student: "Divya Gopal",
+subject: "Science",
+chapter: "Chemistry",
+workDone: "Lab work: Titration experiment results recorded."
+},
+{
+timestamp: "01:00 PM",
+teacher: "Latha maam",
+student: "Lakshman Naidu",
+subject: "Kannada",
+chapter: "Poem Analysis",
+workDone: "Completed first stanza analysis of Kuvempu's poem."
+},
+];
+function showMessage(msg, isError = false, duration = 4000) {
+if (!isError) return;
+const output = document.getElementById("output");
+output.innerHTML = `<b>Error:</b> ${msg}`;
+output.style.backgroundColor = 'mistyrose';
+output.style.borderColor = 'darkred';
+output.style.color = 'darkred';
+output.style.display = "block";
+setTimeout(() => output.style.display = "none", duration);
+}
+function showConfirmationModal(teacherDisplay) {
+const modal = document.getElementById("confirmationModal");
+const message = document.getElementById("confirmationMessage");
+message.innerHTML = `Your daily work done entry for <b>${teacherDisplay}</b> has been successfully recorded. Thank you.`;
+modal.style.display = "block";
+}
+async function loadTeachers() {
+await new Promise(resolve => setTimeout(resolve, 300));
+populateDropdowns();
+}
+function populateDropdowns() {
+const teacherSelect = document.getElementById("teacher");
+teacherSelect.innerHTML = '<option value="" disabled selected>Select Teacher</option>';
+const keys = Object.keys(teachers).sort((a, b) =>
+teachers[a].display.localeCompare(teachers[b].display)
+);
+if(keys.length === 0){
+let o = document.createElement("option");
+o.disabled = true;
+o.selected = true;
+o.textContent = "No teachers available. Add one below.";
+teacherSelect.appendChild(o);
+return;
+}
+keys.forEach(k => {
+let o = document.createElement("option");
+o.value = k;
+o.textContent = teachers[k].display;
+teacherSelect.appendChild(o);
+});
+document.getElementById("student").innerHTML = '<option value="" disabled selected>Select Student (After Teacher)</option>';
+document.getElementById("subject").innerHTML = '<option value="" disabled selected>Select Subject (After Teacher)</option>';
+}
+document.getElementById("teacher").addEventListener("change", function () {
+let tKey = this.value;
+const teacherData = teachers[tKey];
+const studentSelect = document.getElementById("student");
+studentSelect.innerHTML = '<option value="" disabled selected>Select Student</option>';
+if (teacherData && teacherData.students) {
+teacherData.students.sort().forEach(s => {
+let o = document.createElement("option");
+o.value = s;
+o.textContent = s;
+studentSelect.appendChild(o);
+});
+}
+const subjectSelect = document.getElementById("subject");
+subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+if (teacherData && teacherData.subjects) {
+teacherData.subjects.sort().forEach(s => {
+let o = document.createElement("option");
+o.value = s;
+o.textContent = s;
+subjectSelect.appendChild(o);
+});
+}
+});
+document.getElementById("entryForm").addEventListener("submit", async function (e) {
+e.preventDefault();
+const tKey = document.getElementById("teacher").value;
+const student = document.getElementById("student").value;
+const subject = document.getElementById("subject").value;
+const chapter = document.getElementById("chapter").value;
+const workDone = document.getElementById("workDone").value;
+if (!tKey || !student || !subject || !chapter || !workDone) {
+showMessage("Please fill out all required fields.", true);
+return;
+}
+const teacherDisplay = teachers[tKey].display;
+const submitButton = document.getElementById("entryForm").querySelector('button[type="submit"]');
+submitButton.disabled = true;
+submitButton.textContent = "Submitting...";
+const newEntry = {
+timestamp: new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'}),
+teacher: teacherDisplay,
+student: student,
+subject: subject,
+chapter: chapter,
+workDone: workDone
+};
+demoEntries.push(newEntry);
+await new Promise(resolve => setTimeout(resolve, 1000));
+submitButton.disabled = false;
+submitButton.textContent = "Submit Entry";
+showConfirmationModal(teacherDisplay);
+document.getElementById("entryForm").reset();
+populateDropdowns();
+});
+document.getElementById("addStudentBtn").onclick = function() {
+let select = document.getElementById("newStudentTeacher");
+select.innerHTML = "";
+Object.keys(teachers).sort((a, b) =>
+teachers[a].display.localeCompare(teachers[b].display)
+).forEach(k => {
+let o = document.createElement("option");
+o.value = teachers[k].display;
+o.textContent = teachers[k].display;
+select.appendChild(o);
+});
+document.getElementById("studentModal").style.display = "block";
+};
+document.getElementById("closeStudentModal").onclick = function() {
+document.getElementById("studentModal").style.display = "none";
+document.getElementById("newStudentName").value="";
+};
+document.getElementById("saveStudentBtn").onclick = async function() {
+const name = document.getElementById("newStudentName").value.trim();
+const teacherDisplay = document.getElementById("newStudentTeacher").value;
+if (!name || !teacherDisplay) {
+showMessage("Enter student name and assign a teacher.", true);
+return;
+}
+const saveButton = document.getElementById("saveStudentBtn");
+saveButton.disabled = true;
+saveButton.textContent = "Saving...";
+let teacherKey = Object.keys(teachers).find(key => teachers[key].display === teacherDisplay);
+if (teacherKey) {
+if(teachers[teacherKey].students.includes(name)){
+showMessage(`Student "${name}" is already assigned to ${teacherDisplay}.`, true);
+saveButton.disabled = false;
+saveButton.textContent = "Save Student";
+return;
+}
+teachers[teacherKey].students.push(name);
+teachers[teacherKey].students.sort();
+}
+await new Promise(resolve => setTimeout(resolve, 1000));
+saveButton.disabled = false;
+saveButton.textContent = "Save Student";
+showMessage("Student added successfully! Refreshing data.");
+document.getElementById("studentModal").style.display = "none";
+document.getElementById("newStudentName").value = "";
+loadTeachers();
+};
+document.getElementById("addTeacherBtn").onclick = function() {
+document.getElementById("teacherModal").style.display = "block";
+};
+document.getElementById("closeTeacherModal").onclick = function() {
+document.getElementById("teacherModal").style.display = "none";
+document.getElementById("newTeacherName").value = "";
+document.getElementById("newTeacherSubjects").value = "";
+document.getElementById("newTeacherPin").value = "";
+};
+document.getElementById("saveTeacherBtn").onclick = async function() {
+const display = document.getElementById("newTeacherName").value.trim();
+const subjects = document.getElementById("newTeacherSubjects").value.split(",").map(s => s.trim()).filter(Boolean);
+const pin = document.getElementById("newTeacherPin").value.trim();
+if (!display || !subjects.length || !pin || !/^\d+$/.test(pin)) {
+showMessage("Fill all fields for the new teacher and ensure PIN is numbers only.", true);
+return;
+}
+const saveButton = document.getElementById("saveTeacherBtn");
+saveButton.disabled = true;
+saveButton.textContent = "Saving...";
+const existingTeacher = Object.values(teachers).find(t => t.pin === pin);
+if(existingTeacher) {
+showMessage("PIN is already in use by another teacher.", true);
+saveButton.disabled = false;
+saveButton.textContent = "Save Teacher";
+return;
+}
+let newKey = display.toUpperCase().replace(/[^A-Z0-9]/g,"_");
+if (!teachers[newKey]) {
+teachers[newKey] = {
+display: display,
+subjects: subjects,
+pin: pin,
+students: []
+};
+}
+await new Promise(resolve => setTimeout(resolve, 1000));
+saveButton.disabled = false;
+saveButton.textContent = "Save Teacher";
+showMessage("Teacher added successfully! Refreshing data.");
+document.getElementById("teacherModal").style.display = "none";
+document.getElementById("newTeacherName").value = "";
+document.getElementById("newTeacherSubjects").value = "";
+document.getElementById("newTeacherPin").value = "";
+loadTeachers();
+};
+document.getElementById("closeConfirmationModal").onclick = function() {
+document.getElementById("confirmationModal").style.display = "none";
+};
+document.getElementById("confirmCloseBtn").onclick = function() {
+document.getElementById("confirmationModal").style.display = "none";
+};
+window.onclick = function(ev) {
+if (ev.target === document.getElementById("studentModal"))
+document.getElementById("studentModal").style.display = "none";
+if (ev.target === document.getElementById("teacherModal"))
+document.getElementById("teacherModal").style.display = "none";
+if (ev.target === document.getElementById("confirmationModal"))
+document.getElementById("confirmationModal").style.display = "none";
+};
+function displaySubmissions(entries, teacherName) {
+const tableContainer = document.getElementById("tableContainer");
+if (entries.length === 0) {
+tableContainer.innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">No submissions found for ${teacherName} today.</div>`;
+document.getElementById("copyTableBtn").style.display = "none";
+return;
+}
+let tableHTML = `<div class="entry" style="background:var(--main-white); border-color: var(--main-darkred);">
+<h4 style="margin-top:0; color: var(--main-darkred);">Today's Submissions for ${teacherName}</h4>
+<p style="margin-bottom:10px; font-size: 0.9rem;">Filtered by teacher PIN.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Student</th>
+<th>Subject</th>
+<th>Chapter</th>
+<th>Work Done</th>
+</tr>
+</thead>
+<tbody>
+`;
+entries.forEach(entry => {
+tableHTML += `<tr>
+<td>${entry.timestamp}</td>
+<td>${entry.student}</td>
+<td>${entry.subject}</td>
+<td>${entry.chapter}</td>
+<td>${entry.workDone}</td>
+</tr>
+`;
+});
+tableHTML += `</tbody>
+</table>
+`;
+tableContainer.innerHTML = tableHTML;
+document.getElementById("copyTableBtn").style.display = "block";
+}
+document.getElementById("viewSubmissionsBtn").onclick = async function() {
+const pin = document.getElementById("pin").value;
+if (!pin) {
+showMessage("Please enter your PIN.", true);
+document.getElementById("tableContainer").innerHTML = "";
+return;
+}
+const viewButton = document.getElementById("viewSubmissionsBtn");
+viewButton.disabled = true;
+viewButton.textContent = "Loading...";
+document.getElementById("tableContainer").innerHTML = '<div class="entry" style="text-align:center;">Retrieving submissions...</div>';
+const teacherData = Object.values(teachers).find(t => t.pin === pin);
+if (!teacherData) {
+showMessage("Invalid PIN.", true, 6000);
+document.getElementById("tableContainer").innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">Error retrieving data. Invalid PIN entered.</div>`;
+document.getElementById("copyTableBtn").style.display = "none";
+viewButton.disabled = false;
+viewButton.textContent = "View Today's Submissions";
+return;
+}
+await new Promise(resolve => setTimeout(resolve, 800));
+const filteredEntries = demoEntries.filter(entry => entry.teacher === teacherData.display);
+displaySubmissions(filteredEntries, teacherData.display);
+viewButton.disabled = false;
+viewButton.textContent = "View Today's Submissions";
+};
+document.getElementById('toggleView').addEventListener('click', function() {
+const container = document.getElementById('mainContainer');
+const isDesktop = container.classList.toggle('desktop');
+this.textContent = isDesktop ? 'Optimize for Mobile' : 'Optimize for Desktop';
+});
+// Copy table functionality (improved, full formatting)
+document.getElementById("copyTableBtn").addEventListener("click", async () => {
+    const table = document.querySelector("#tableContainer table");
+    if (!table) return;
+    const tableHTML = table.outerHTML;
 
-    <div class="container" id="mainContainer">
-        <button id="toggleView" class="secondary">Optimize for Desktop</button>
-
-        <form id="entryForm">
-            <div>
-                <label>Teacher:</label>
-                <select id="teacher" required>
-                    <option value="" disabled selected>Loading...</option>
-                </select>
-            </div>
-            <div>
-                <label>Student:</label>
-                <select id="student" required>
-                    <option value="" disabled selected>Select Student (After Teacher)</option>
-                </select>
-            </div>
-            <div>
-                <label>Subject:</label>
-                <select id="subject" required>
-                    <option value="" disabled selected>Select Subject (After Teacher)</option>
-                </select>
-            </div>
-            <div>
-                <label>Chapter:</label>
-                <input type="text" id="chapter" required>
-            </div>
-            <div class="full-width">
-                <label>Work Done:</label>
-                <textarea id="workDone" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="primary full-width">Submit Entry</button>
-        </form>
-
-        <div style="margin-top:15px; display: flex; gap: 10px;">
-            <button id="addStudentBtn" class="secondary">Add Student</button>
-            <button id="addTeacherBtn" class="secondary">Add Teacher</button>
-        </div>
-
-        <div class="pin-section">
-            <p style="margin-top:0; font-size: 0.9rem; color: var(--main-darkred); font-weight: 700;">
-                Enter your confidential PIN to view data.
-            </p>
-            <label style="margin-top:0;">View Submissions:</label>
-            <input type="password" id="pin" placeholder="Enter Teacher PIN">
-            <div class="action-buttons">
-                <button id="viewSubmissionsBtn" class="primary">View Today's Submissions</button>
-                <a href="https://docs.google.com/spreadsheets/d/1CrO5IRSpQCed70G90qCrlTuYoO9KL-lXnL4bDnz_DA0/edit?pli=1&gid=838070733#gid=838070733" target="_blank" class="btn-link">
-                    <button class="secondary">View Google Sheet</button>
-                </a>
-            </div>
-        </div>
-
-        <div id="output" class="entry" style="display:none"></div>
-        <button id="copyTableBtn" class="secondary" style="display:none; margin-top:15px; width:100%;">
-            Copy Table
-        </button>
-        <div id="tableContainer"></div>
-    </div>
-
-    <div class="modal" id="studentModal">
-        <div class="modal-content">
-            <span class="close" id="closeStudentModal">&times;</span>
-            <h3 style="margin-top:0;">Add New Student</h3>
-            <label>Name:</label>
-            <input type="text" id="newStudentName">
-            <label>Assign Teacher:</label>
-            <select id="newStudentTeacher"></select>
-            <button id="saveStudentBtn" class="primary">Save Student</button>
-        </div>
-    </div>
-
-    <div class="modal" id="teacherModal">
-        <div class="modal-content">
-            <span class="close" id="closeTeacherModal">&times;</span>
-            <h3 style="margin-top:0;">Add New Teacher</h3>
-            <label>Display Name:</label>
-            <input type="text" id="newTeacherName">
-            <label>Subjects (comma separated):</label>
-            <input type="text" id="newTeacherSubjects">
-            <label>PIN (numbers only):</label>
-            <input type="password" id="newTeacherPin">
-            <button id="saveTeacherBtn" class="primary">Save Teacher</button>
-        </div>
-    </div>
-
-    <div class="modal" id="confirmationModal">
-        <div class="modal-content" style="border-color: green;">
-            <span class="close" id="closeConfirmationModal" style="color: green;">&times;</span>
-            <h3 style="margin-top:0; color: green; font-weight: 900; display: flex; align-items: center; gap: 8px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-                Entry Recorded!
-            </h3>
-            <p id="confirmationMessage" style="color: var(--main-darkred); font-weight: 500;">
-                Your daily work done entry has been successfully recorded. Thank you.
-            </p>
-            <button id="confirmCloseBtn" class="primary full-width" style="background: linear-gradient(90deg,green,darkgreen); border-color: green;">
-                Acknowledge and Continue
-            </button>
-        </div>
-    </div>
-
-    <script>
-        let teachers = {
-            "AISHWARYA_MAAM": {
-                display: "Aishwarya maam",
-                subjects: ["Math", "Other"],
-                pin: "1111",
-                students: ["Raghu Naidu", "Akshay Kumar", "Sneha Ramesh", "Pranav Shetty", "Kavya Srinivasan", "Rohan Gowda", "Meera Menon"]
-            },
-            "DIVYA_MAAM": {
-                display: "Divya maam",
-                subjects: ["Science", "Other"],
-                pin: "2222",
-                students: ["Tejas Naidu", "Harsha Venkatesh", "Nandini Rao", "Sanjay Reddy", "Keerthana Mohan", "Vinay Prabhu", "Shruthi Balakrishna"]
-            },
-            "GEETU_MAAM": {
-                display: "Geetu maam",
-                subjects: ["English", "SST", "Other"],
-                pin: "3333",
-                students: ["Manoj Naidu", "Shyam Chandra", "Lakshmi Subramanian", "Pooja Kumar", "Chirag Narayan", "Anusha Desai", "Sahana Krishna"]
-            },
-            "DEEPALI_MAAM": {
-                display: "Deepali maam",
-                subjects: ["English", "SST", "Science", "Math", "Other"],
-                pin: "4444",
-                students: ["Arun Naidu", "Divya Gopal", "Suresh Hebbar", "Rashmi Acharya", "Vivek Rajan", "Raksha Shekhar", "Karthik Pillai"]
-            },
-            "PRIYANKA_MAAM": {
-                display: "Priyanka maam",
-                subjects: ["Hindi", "SST", "Science", "Math", "Other"],
-                pin: "5555",
-                students: ["Madhuri Naidu", "Ganesh Murthy", "Anjali Bhat", "Satish Hegde", "Sindhu Rao", "Ramu Srinivas", "Ramya D'Souza"]
-            },
-            "LATHA_MAAM": {
-                display: "Latha maam",
-                subjects: ["Kannada", "SST", "Science", "Maths", "Other"],
-                pin: "6666",
-                students: ["Lakshman Naidu", "Karthik Shenoy", "Tejaswini Pai", "Neha Krishnamurthy", "Deepak Joshi", "Asha Ramamurthy", "Surya Mohan"]
-            },
-            "KHUSHBOO_MAAM": {
-                display: "Khushboo maam",
-                subjects: ["Hindi", "English", "Kannada", "Other"],
-                pin: "7777",
-                students: ["Arjun Naidu", "Suhas Kulkarni", "Rekha Dutt", "Vikas Urs", "Rachana Shetty", "Shilpa Gowda", "Abhijit Kumar"]
-            },
-        };
-
-        let demoEntries = [
-            {
-                timestamp: "08:30 AM",
-                teacher: "Aishwarya maam",
-                student: "Raghu Naidu",
-                subject: "General",
-                chapter: "Introduction to Class",
-                workDone: "Attendance and brief on upcoming curriculum."
-            },
-            {
-                timestamp: "09:00 AM",
-                teacher: "Divya maam",
-                student: "Tejas Naidu",
-                subject: "Science",
-                chapter: "Biology: Cells",
-                workDone: "Reviewed Chapter 1, assigned reading."
-            },
-            {
-                timestamp: "09:45 AM",
-                teacher: "Deepali maam",
-                student: "Arun Naidu",
-                subject: "Math",
-                chapter: "Algebra",
-                workDone: "Finished practice set 2.1, homework assigned."
-            },
-            {
-                timestamp: "10:15 AM",
-                teacher: "Aishwarya maam",
-                student: "Akshay Kumar",
-                subject: "Chennai_Super_Kings_Superfan",
-                chapter: "History of IPL",
-                workDone: "Discussed Dhoni's captaincy and team legacy."
-            },
-            {
-                timestamp: "11:00 AM",
-                teacher: "Priyanka maam",
-                student: "Madhuri Naidu",
-                subject: "Hindi",
-                chapter: "Poetry",
-                workDone: "Recitation of 'Dohe' by Kabir."
-            },
-            {
-                timestamp: "12:00 PM",
-                teacher: "Geetu maam",
-                student: "Manoj Naidu",
-                subject: "English",
-                chapter: "Grammar",
-                workDone: "Practiced tenses and sentence correction."
-            },
-            {
-                timestamp: "12:30 PM",
-                teacher: "Deepali maam",
-                student: "Divya Gopal",
-                subject: "Science",
-                chapter: "Chemistry",
-                workDone: "Lab work: Titration experiment results recorded."
-            },
-            {
-                timestamp: "01:00 PM",
-                teacher: "Latha maam",
-                student: "Lakshman Naidu",
-                subject: "Kannada",
-                chapter: "Poem Analysis",
-                workDone: "Completed first stanza analysis of Kuvempu's poem."
-            },
-        ];
-
-        function showMessage(msg, isError = false, duration = 4000) {
-            if (!isError) return;
-            const output = document.getElementById("output");
-            output.innerHTML = `<b>Error:</b> ${msg}`;
-            output.style.backgroundColor = 'mistyrose';
-            output.style.borderColor = 'darkred';
-            output.style.color = 'darkred';
-            output.style.display = "block";
-            setTimeout(() => output.style.display = "none", duration);
+    // Modern Clipboard API for HTML formatting
+    if (navigator.clipboard && window.ClipboardItem) {
+        try {
+            const blob = new Blob([tableHTML], {type: "text/html"});
+            const clipboardItem = new ClipboardItem({ "text/html": blob });
+            await navigator.clipboard.write([clipboardItem]);
+            alert("Table copied to clipboard with formatting! You can paste in Word/Excel.");
+            return;
+        } catch (err) {
+            // If HTML clipboard fails, fallback to execCommand below
         }
+    }
 
-        function showConfirmationModal(teacherDisplay) {
-            const modal = document.getElementById("confirmationModal");
-            const message = document.getElementById("confirmationMessage");
-            message.innerHTML = `Your daily work done entry for <b>${teacherDisplay}</b> has been successfully recorded. Thank you.`;
-            modal.style.display = "block";
-        }
+    // Fallback for older browsers (plain formatting, still preserves table)
+    let tempElem = document.createElement("div");
+    tempElem.innerHTML = tableHTML;
+    tempElem.style.position = "absolute";
+    tempElem.style.left = "-9999px";
+    document.body.appendChild(tempElem);
 
-        async function loadTeachers() {
-            await new Promise(resolve => setTimeout(resolve, 300));
-            populateDropdowns();
-        }
+    let range = document.createRange();
+    range.selectNode(tempElem);
+    let selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
 
-        function populateDropdowns() {
-            const teacherSelect = document.getElementById("teacher");
-            teacherSelect.innerHTML = '<option value="" disabled selected>Select Teacher</option>';
-            
-            const keys = Object.keys(teachers).sort((a, b) => 
-                teachers[a].display.localeCompare(teachers[b].display)
-            );
-            
-            if(keys.length === 0){
-                let o = document.createElement("option");
-                o.disabled = true;
-                o.selected = true;
-                o.textContent = "No teachers available. Add one below.";
-                teacherSelect.appendChild(o);
-                return;
-            }
-            
-            keys.forEach(k => {
-                let o = document.createElement("option");
-                o.value = k;
-                o.textContent = teachers[k].display;
-                teacherSelect.appendChild(o);
-            });
-            
-            document.getElementById("student").innerHTML = '<option value="" disabled selected>Select Student (After Teacher)</option>';
-            document.getElementById("subject").innerHTML = '<option value="" disabled selected>Select Subject (After Teacher)</option>';
-        }
-
-        document.getElementById("teacher").addEventListener("change", function () {
-            let tKey = this.value;
-            const teacherData = teachers[tKey];
-            
-            const studentSelect = document.getElementById("student");
-            studentSelect.innerHTML = '<option value="" disabled selected>Select Student</option>';
-            if (teacherData && teacherData.students) {
-                teacherData.students.sort().forEach(s => {
-                    let o = document.createElement("option");
-                    o.value = s;
-                    o.textContent = s;
-                    studentSelect.appendChild(o);
-                });
-            }
-            
-            const subjectSelect = document.getElementById("subject");
-            subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
-            if (teacherData && teacherData.subjects) {
-                teacherData.subjects.sort().forEach(s => {
-                    let o = document.createElement("option");
-                    o.value = s;
-                    o.textContent = s;
-                    subjectSelect.appendChild(o);
-                });
-            }
-        });
-
-        document.getElementById("entryForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            
-            const tKey = document.getElementById("teacher").value;
-            const student = document.getElementById("student").value;
-            const subject = document.getElementById("subject").value;
-            const chapter = document.getElementById("chapter").value;
-            const workDone = document.getElementById("workDone").value;
-            
-            if (!tKey || !student || !subject || !chapter || !workDone) {
-                showMessage("Please fill out all required fields.", true);
-                return;
-            }
-            
-            const teacherDisplay = teachers[tKey].display;
-            const submitButton = document.getElementById("entryForm").querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = "Submitting...";
-            
-            const newEntry = {
-                timestamp: new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'}),
-                teacher: teacherDisplay,
-                student: student,
-                subject: subject,
-                chapter: chapter,
-                workDone: workDone
-            };
-            
-            demoEntries.push(newEntry);
-            
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            submitButton.disabled = false;
-            submitButton.textContent = "Submit Entry";
-            
-            showConfirmationModal(teacherDisplay);
-            document.getElementById("entryForm").reset();
-            populateDropdowns();
-        });
-
-        document.getElementById("addStudentBtn").onclick = function() {
-            let select = document.getElementById("newStudentTeacher");
-            select.innerHTML = "";
-            Object.keys(teachers).sort((a, b) => 
-                teachers[a].display.localeCompare(teachers[b].display)
-            ).forEach(k => {
-                let o = document.createElement("option");
-                o.value = teachers[k].display;
-                o.textContent = teachers[k].display;
-                select.appendChild(o);
-            });
-            document.getElementById("studentModal").style.display = "block";
-        };
-
-        document.getElementById("closeStudentModal").onclick = function() {
-            document.getElementById("studentModal").style.display = "none";
-            document.getElementById("newStudentName").value="";
-        };
-
-        document.getElementById("saveStudentBtn").onclick = async function() {
-            const name = document.getElementById("newStudentName").value.trim();
-            const teacherDisplay = document.getElementById("newStudentTeacher").value;
-            
-            if (!name || !teacherDisplay) {
-                showMessage("Enter student name and assign a teacher.", true);
-                return;
-            }
-            
-            const saveButton = document.getElementById("saveStudentBtn");
-            saveButton.disabled = true;
-            saveButton.textContent = "Saving...";
-            
-            let teacherKey = Object.keys(teachers).find(key => teachers[key].display === teacherDisplay);
-            if (teacherKey) {
-                if(teachers[teacherKey].students.includes(name)){
-                    showMessage(`Student "${name}" is already assigned to ${teacherDisplay}.`, true);
-                    saveButton.disabled = false;
-                    saveButton.textContent = "Save Student";
-                    return;
-                }
-                teachers[teacherKey].students.push(name);
-                teachers[teacherKey].students.sort();
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            saveButton.disabled = false;
-            saveButton.textContent = "Save Student";
-            showMessage("Student added successfully! Refreshing data.");
-            document.getElementById("studentModal").style.display = "none";
-            document.getElementById("newStudentName").value = "";
-            loadTeachers();
-        };
-
-        document.getElementById("addTeacherBtn").onclick = function() {
-            document.getElementById("teacherModal").style.display = "block";
-        };
-
-        document.getElementById("closeTeacherModal").onclick = function() {
-            document.getElementById("teacherModal").style.display = "none";
-            document.getElementById("newTeacherName").value = "";
-            document.getElementById("newTeacherSubjects").value = "";
-            document.getElementById("newTeacherPin").value = "";
-        };
-
-        document.getElementById("saveTeacherBtn").onclick = async function() {
-            const display = document.getElementById("newTeacherName").value.trim();
-            const subjects = document.getElementById("newTeacherSubjects").value.split(",").map(s => s.trim()).filter(Boolean);
-            const pin = document.getElementById("newTeacherPin").value.trim();
-            
-            if (!display || !subjects.length || !pin || !/^\d+$/.test(pin)) {
-                showMessage("Fill all fields for the new teacher and ensure PIN is numbers only.", true);
-                return;
-            }
-            
-            const saveButton = document.getElementById("saveTeacherBtn");
-            saveButton.disabled = true;
-            saveButton.textContent = "Saving...";
-            
-            const existingTeacher = Object.values(teachers).find(t => t.pin === pin);
-            if(existingTeacher) {
-                showMessage("PIN is already in use by another teacher.", true);
-                saveButton.disabled = false;
-                saveButton.textContent = "Save Teacher";
-                return;
-            }
-            
-            let newKey = display.toUpperCase().replace(/[^A-Z0-9]/g,"_");
-            if (!teachers[newKey]) {
-                teachers[newKey] = {
-                    display: display,
-                    subjects: subjects,
-                    pin: pin,
-                    students: []
-                };
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            saveButton.disabled = false;
-            saveButton.textContent = "Save Teacher";
-            showMessage("Teacher added successfully! Refreshing data.");
-            document.getElementById("teacherModal").style.display = "none";
-            document.getElementById("newTeacherName").value = "";
-            document.getElementById("newTeacherSubjects").value = "";
-            document.getElementById("newTeacherPin").value = "";
-            loadTeachers();
-        };
-
-        document.getElementById("closeConfirmationModal").onclick = function() {
-            document.getElementById("confirmationModal").style.display = "none";
-        };
-
-        document.getElementById("confirmCloseBtn").onclick = function() {
-            document.getElementById("confirmationModal").style.display = "none";
-        };
-
-        window.onclick = function(ev) {
-            if (ev.target === document.getElementById("studentModal"))
-                document.getElementById("studentModal").style.display = "none";
-            if (ev.target === document.getElementById("teacherModal"))
-                document.getElementById("teacherModal").style.display = "none";
-            if (ev.target === document.getElementById("confirmationModal"))
-                document.getElementById("confirmationModal").style.display = "none";
-        };
-
-        function displaySubmissions(entries, teacherName) {
-            const tableContainer = document.getElementById("tableContainer");
-            
-            if (entries.length === 0) {
-                tableContainer.innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">No submissions found for ${teacherName} today.</div>`;
-                document.getElementById("copyTableBtn").style.display = "none";
-                return;
-            }
-            
-            let tableHTML = `<div class="entry" style="background:var(--main-white); border-color: var(--main-darkred);">
-                <h4 style="margin-top:0; color: var(--main-darkred);">Today's Submissions for ${teacherName}</h4>
-                <p style="margin-bottom:10px; font-size: 0.9rem;">Filtered by teacher PIN.</p>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Student</th>
-                        <th>Subject</th>
-                        <th>Chapter</th>
-                        <th>Work Done</th>
-                    </tr>
-                </thead>
-                <tbody>
-            `;
-            
-            entries.forEach(entry => {
-                tableHTML += `<tr>
-                    <td>${entry.timestamp}</td>
-                    <td>${entry.student}</td>
-                    <td>${entry.subject}</td>
-                    <td>${entry.chapter}</td>
-                    <td>${entry.workDone}</td>
-                </tr>
-                `;
-            });
-            
-            tableHTML += `</tbody>
-            </table>
-            `;
-            
-            tableContainer.innerHTML = tableHTML;
-            document.getElementById("copyTableBtn").style.display = "block";
-        }
-
-        document.getElementById("viewSubmissionsBtn").onclick = async function() {
-            const pin = document.getElementById("pin").value;
-            
-            if (!pin) {
-                showMessage("Please enter your PIN.", true);
-                document.getElementById("tableContainer").innerHTML = "";
-                return;
-            }
-            
-            const viewButton = document.getElementById("viewSubmissionsBtn");
-            viewButton.disabled = true;
-            viewButton.textContent = "Loading...";
-            
-            document.getElementById("tableContainer").innerHTML = '<div class="entry" style="text-align:center;">Retrieving submissions...</div>';
-            
-            const teacherData = Object.values(teachers).find(t => t.pin === pin);
-            
-            if (!teacherData) {
-                showMessage("Invalid PIN.", true, 6000);
-                document.getElementById("tableContainer").innerHTML = `<div class="entry" style="color:var(--main-darkred); border-color:var(--main-darkred);">Error retrieving data. Invalid PIN entered.</div>`;
-                document.getElementById("copyTableBtn").style.display = "none";
-                viewButton.disabled = false;
-                viewButton.textContent = "View Today's Submissions";
-                return;
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            const filteredEntries = demoEntries.filter(entry => entry.teacher === teacherData.display);
-            displaySubmissions(filteredEntries, teacherData.display);
-            
-            viewButton.disabled = false;
-            viewButton.textContent = "View Today's Submissions";
-        };
-
-        document.getElementById('toggleView').addEventListener('click', function() {
-            const container = document.getElementById('mainContainer');
-            const isDesktop = container.classList.toggle('desktop');
-            this.textContent = isDesktop ? 'Optimize for Mobile' : 'Optimize for Desktop';
-        });
-
-        // Copy table functionality
-        document.getElementById("copyTableBtn").addEventListener("click", () => {
-            const table = document.querySelector("#tableContainer table");
-            if (!table) return;
-            
-            let range = document.createRange();
-            range.selectNode(table);
-            let selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            
-            try {
-                document.execCommand("copy");
-                alert("Table copied to clipboard!");
-            } catch (err) {
-                alert("Copy failed.");
-            }
-            
-            selection.removeAllRanges();
-        });
-
-        window.onload = loadTeachers;
-    </script>
+    try {
+        document.execCommand("copy");
+        alert("Table copied to clipboard! You can paste it as a table.");
+    } catch (err) {
+        alert("Copy failed. Please update your browser.");
+    }
+    selection.removeAllRanges();
+    document.body.removeChild(tempElem);
+});
+window.onload = loadTeachers;
+</script>
 </body>
 </html>
-
